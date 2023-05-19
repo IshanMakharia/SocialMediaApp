@@ -111,6 +111,20 @@ router.put("/:id/unfollow", async (req, res)=>{
     } else {
         res.status(403).json("You cant unfollow yourself");
     }
-})
+});
+
+
+//search
+router.get("/mysearch", async (req, res) => {
+    try {
+        const { q } = req.query;
+        const users = User.find({username: {$regex: q}});
+        res.json(users);
+    } catch(err) {
+        console.log(err);
+    } 
+    
+});
+
 
 module.exports = router
